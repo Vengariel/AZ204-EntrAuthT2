@@ -5,6 +5,14 @@ using System.Text;
 
 internal class Program
 {
+    /// <summary>
+    /// <see cref="https://learn.microsoft.com/en-us/entra/identity-platform/msal-client-application-configuration"/>
+    /// </summary>
+    //https://login.microsoftonline.com/<tenant>/ SINGLE ORG
+    //https://login.microsoftonline.com/common/ WORK SCHOOL OR PERSONAL
+    //https://login.microsoftonline.com/organizations/WORK SCHOOL
+    //https://login.microsoftonline.com/consumers/ PERSONAL ONLY
+
 
     static Dictionary<string, string> SupportedFlows = new Dictionary<string, string>() { { "1", "Interactive" }, { "2", "Device Code" } };
     static IConfigurationRoot GetAppSettings()
@@ -33,12 +41,14 @@ internal class Program
 
         // sin redirect
         string[] scopes = { "user.read" };
-        var localRedirectUrl = "http://localhost";
+        //var localRedirectUrl = "http://localhost";
 
         var publicApp = PublicClientApplicationBuilder
             .Create(settings.AzureSettings.ClientId)
+            .WithTenantId("common")
             .WithTenantId(settings.AzureSettings.TenantId)
-            .WithRedirectUri(localRedirectUrl)
+            //.WithRedirectUri(localRedirectUrl) //KISS
+            .WithDefaultRedirectUri() //method will set the public client application's redirect URI property to the default recommended redirect URI for public client applications.
             .Build();
         Console.WriteLine("Hello, World!");
 
@@ -63,6 +73,7 @@ internal class Program
 
                         var res = await publicApp.AcquireTokenInteractive(scopes).ExecuteAsync();
                         sb.AppendLine("--------------------INTERACTIVE FLOW--------------------");
+                        await PrintTokenClaimsAndStalkAfterSuccess(sb, res);
                         choosenOption = GetMenuUserOption();
                         break;
 
@@ -75,7 +86,7 @@ internal class Program
                             Console.ReadLine();
                             return Task.CompletedTask;
                         }).ExecuteAsync(default);
-
+                        await PrintTokenClaimsAndStalkAfterSuccess(sb, resDevice);
                         choosenOption = GetMenuUserOption();
                         break;
 
