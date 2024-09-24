@@ -1,9 +1,5 @@
 {
   "profiles": {
-    "WSL": {
-      "commandName": "WSL2",
-      "distributionName": ""
-    },
     "AZ204-EntrAuth-Development": {
       "commandName": "Project",
       "environmentVariables": {
