@@ -46,8 +46,8 @@ internal class Program
         // sin redirect
         string[] scopes = { "user.read" };
         //var localRedirectUrl = "http://localhost";
-        //  await PublicClient.Build_Process(settings, scopes);
-       await ConfidentialClient.Build_Process(settings, scopes);
+        await new PublicClient().Build_Process(settings, scopes);
+        //   await ConfidentialClient.Build_Process(settings, scopes);
 
     }
 

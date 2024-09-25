@@ -3,7 +3,7 @@ using System.Text;
 
 namespace AZ204_EntrAuth.Clients
 {
-    internal class PublicClient : BaseAppClient
+    public class PublicClient : BaseAppClient, IPublicClient
     {
         static Dictionary<string, string> SupportedFlows = new Dictionary<string, string>() { { "1", "Interactive" }, { "2", "Device Code" } };
 
@@ -26,20 +26,20 @@ namespace AZ204_EntrAuth.Clients
             }
             return valuePicked;
         }
-        public static async Task Build_Process(AppSettings appSettings, string[] scopes)
+
+        public async Task Build_Process(AppSettings appSettings, string[] scopes)
         {
             var concreteCllientAppSettings = appSettings.AzureSettings.PublicClient;
             var publicApp = PublicClientApplicationBuilder
             .Create(concreteCllientAppSettings.ClientId)
-            .WithTenantId("common")
+           // .WithTenantId("common")
             .WithTenantId(concreteCllientAppSettings.TenantId)
             //.WithRedirectUri(localRedirectUrl) //KISS
             .WithDefaultRedirectUri() //method will set the public client application's redirect URI property to the default recommended redirect URI for public client applications.
             .Build();
-            Console.WriteLine("Hello, World!");
 
             await ProcessOptions(publicApp, scopes);
-            Environment.Exit(0);
+         //   Environment.Exit(0);
         }
 
         static async Task ProcessOptions(IPublicClientApplication publicApp, string[] scopes)
@@ -75,7 +75,6 @@ namespace AZ204_EntrAuth.Clients
                             await PrintTokenClaimsAndStalkAfterSuccess(sb, resDevice);
                             choosenOption = GetMenuUserOption();
                             break;
-
                     }
                 }
 
@@ -87,7 +86,7 @@ namespace AZ204_EntrAuth.Clients
                 Console.ReadLine();
             }
         }
-     
+
 
     }
 }

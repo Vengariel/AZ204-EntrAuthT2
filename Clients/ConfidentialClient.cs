@@ -4,10 +4,10 @@ using static System.Net.WebRequestMethods;
 
 namespace AZ204_EntrAuth.Clients
 {
-    internal class ConfidentialClient : BaseAppClient
+    public class ConfidentialClient : BaseAppClient, IConfidentialClient
     {
         static string secret;
-        public static async Task Build_Process(AppSettings appSettings, string[] scopes)
+        public async Task Build_Process(AppSettings appSettings, string[] scopes)
         {
             var concreteCllientAppSettings = appSettings.AzureSettings.ConfidentialClient;
             var confidentialClientIOptions = new ConfidentialClientApplicationOptions()
@@ -37,12 +37,25 @@ namespace AZ204_EntrAuth.Clients
         static async Task ProcessOptions(IConfidentialClientApplication confidentialApp, string[] scopes)
         {
             var sb = new StringBuilder();
-            var newScopes = new string[] { "https://graph.microsoft.com/.default" }; // single  "https://outlook.office365.com/.default" 
+            //var newScopes = new string[] { "https://graph.microsoft.com/.default" }; // single  "https://outlook.office365.com/.default" 
 
-            var res = await confidentialApp.AcquireTokenForClient(newScopes).ExecuteAsync();
+            var res = await confidentialApp.AcquireTokenForClient(scopes).ExecuteAsync();
             sb.AppendLine("--------------------ACQUIRE TOKEN FOR CLIENT FLOW--------------------");
             await PrintTokenClaimsAndStalkAfterSuccess(sb, res);
             Console.ReadLine();
         }
+
+        //static async Task ProcessOptions(IConfidentialClientApplication confidentialApp, string[] scopes)
+        //{
+        //    var sb = new StringBuilder();
+        //    var newScopes = new string[] { "https://graph.microsoft.com/.default" }; // single  "https://outlook.office365.com/.default" 
+
+        //    var res = await confidentialApp.AcquireTokenForClient(newScopes).ExecuteAsync();
+        //    sb.AppendLine("--------------------ACQUIRE TOKEN FOR CLIENT FLOW--------------------");
+        //    await PrintTokenClaimsAndStalkAfterSuccess(sb, res);
+        //    Console.ReadLine();
+        //    var og = new UserAssertion()
+        //    confidentialApp.AcquireTokenOnBehalfOf
+        //}
     }
 }

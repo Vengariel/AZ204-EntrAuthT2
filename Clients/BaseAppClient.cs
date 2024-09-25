@@ -1,14 +1,10 @@
 ﻿using Microsoft.Identity.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AZ204_EntrAuth.Clients
 {
-    internal class BaseAppClient
+    public abstract class BaseAppClient
     {
         protected static async Task PrintTokenClaimsAndStalkAfterSuccess(StringBuilder sb, AuthenticationResult? authenticationResult)
         {
