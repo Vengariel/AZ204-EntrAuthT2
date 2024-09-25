@@ -57,5 +57,32 @@ namespace AZ204_EntrAuth.Clients
         //    var og = new UserAssertion()
         //    confidentialApp.AcquireTokenOnBehalfOf
         //}
+
+
+        //TODO IMPLEMENT OBN BEHALF OF FOR GRAPH FROM TOKEN
+
+        //ar scopes = new[] { "https://graph.microsoft.com/.default" };
+
+        //// Multi-tenant apps can use "common",
+        //// single-tenant apps must use the tenant ID from the Azure portal
+        //var tenantId = "common";
+
+        //// Values from app registration
+        //var clientId = "YOUR_CLIENT_ID";
+        //var clientSecret = "YOUR_CLIENT_SECRET";
+
+        //// using Azure.Identity;
+        //var options = new OnBehalfOfCredentialOptions
+        //{
+        //    AuthorityHost = AzureAuthorityHosts.AzurePublicCloud,
+        //};
+
+        //// This is the incoming token to exchange using on-behalf-of flow
+        //var oboToken = "JWT_TOKEN_TO_EXCHANGE";
+
+        //var onBehalfOfCredential = new OnBehalfOfCredential(
+        //    tenantId, clientId, clientSecret, oboToken, options);
+
+        //var graphClient = new GraphServiceClient(onBehalfOfCredential, scopes);
     }
 }
