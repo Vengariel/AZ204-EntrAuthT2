@@ -11,8 +11,7 @@ namespace AZ204_EntrAuth.Clients
             sb.AppendLine($"Access Token: {authenticationResult?.AccessToken}");
             Append2EmptyLines(sb);
             sb.AppendLine($"Id Token: {authenticationResult?.IdToken}");
-
-
+            Append2EmptyLines(sb);
             foreach (var claim in authenticationResult?.ClaimsPrincipal?.Identities?.FirstOrDefault()?.Claims ?? Enumerable.Empty<Claim>())
             {
                 sb.AppendLine($"{claim.Type}: {claim.Value}");
@@ -25,7 +24,7 @@ namespace AZ204_EntrAuth.Clients
         }
 
         #region private utility stuff
-        protected static void Append2EmptyLines(StringBuilder sb)
+        private static void Append2EmptyLines(StringBuilder sb)
         {
             sb.AppendLine(Environment.NewLine);
             sb.AppendLine(Environment.NewLine);

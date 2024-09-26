@@ -3,7 +3,7 @@ namespace AZ204_EntrAuth
 {
     internal class FlurlIt
     {
-        const string GRAPH_URL = "https://graph.microsoft.com/beta/me";
+        const string GRAPH_URL = "https://graph.microsoft.com/v1.0/me";
 
         public static async Task<string> StalkThroughGraph(string accessToken)
         {

@@ -1,8 +1,6 @@
 ﻿using AZ204_EntrAuth;
 using AZ204_EntrAuth.Clients;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Identity.Client;
-using System.Text;
 
 internal class Program
 {
@@ -32,23 +30,71 @@ internal class Program
             .Build();
 
     }
+    static Dictionary<string, string> SupportedFlows = new Dictionary<string, string>() {
+        { "1", "Interactive" },
+        { "2", "Device Code" },
+         { "3", "Client Credentials" },
+    };
     #endregion Settings
 
-    private static async Task Main(string[] args)
+    public static async Task Main(string[] args)
     {
         Console.WriteLine("Reading settings");
         var settings = GetAppSettings().Get<AppSettings>();
 
+        var choice = GetMenuUserOption();
+        while (choice != 0)
+        {
+            switch (choice)
+            {
+                case 1:
+                case 2:
+                    var publicClient = new PublicClient();
+                    string[] scopes = { "user.read" };
+                    await publicClient.Build_Process(settings, scopes, choice);
+                    choice = GetMenuUserOption();
+                    break;
+
+                case 3:
+                    var confidentialClient = new ConfidentialClient();
+                    string[] newScopes = { "https://graph.microsoft.com/.default" };
+                    await confidentialClient.Build_Process(settings, newScopes);
+                    choice = GetMenuUserOption();
+                    break;
+
+            }
+
+        }
         //sin tenant
 
         // otro user
 
         // sin redirect
-        string[] scopes = { "user.read" };
-        //var localRedirectUrl = "http://localhost";
-        await new PublicClient().Build_Process(settings, scopes);
-        //   await ConfidentialClient.Build_Process(settings, scopes);
+    }
 
+    static byte GetMenuUserOption()
+    {
+        Console.WriteLine($"AZ204-2024 Study Group: Identity Platform Demo");
+        Console.WriteLine(Environment.NewLine);
+        Console.WriteLine($"Pick Public Client option:");
+        Console.WriteLine($"1 - Interactive token acq");
+        Console.WriteLine($"2 - Device Code acq");
+        Console.WriteLine(Environment.NewLine);
+
+        Console.WriteLine($"Pick Confidential Client option:");
+        Console.WriteLine($"3 - Token for Client acq");
+        Console.WriteLine(Environment.NewLine);
+
+        Console.WriteLine($"0 - TO EXIT");
+        byte valuePicked = 0;
+
+        var choice = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(choice) || !SupportedFlows.Keys.ToArray().Contains(choice) || !byte.TryParse(choice, out valuePicked))
+        {
+            Console.WriteLine("#FAIL, BYE");
+
+        }
+        return valuePicked;
     }
 
 }
