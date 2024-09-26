@@ -27,13 +27,12 @@ namespace AZ204_EntrAuth.Clients
         //    return valuePicked;
         //}
 
-        public async Task Build_Process(AppSettings appSettings, string[] scopes, byte choosenOption)
+        public override async Task Build_Process(ClientSettings clientSettings, string[] scopes, byte choosenOption)
         {
-            var concreteCllientAppSettings = appSettings.AzureSettings.PublicClient;
             var publicApp = PublicClientApplicationBuilder
-            .Create(concreteCllientAppSettings.ClientId)
-            // .WithTenantId("common")
-            .WithTenantId(concreteCllientAppSettings.TenantId)
+            .Create(clientSettings.ClientId)
+            //.WithTenantId("common")
+            .WithTenantId(clientSettings.TenantId)
             .WithDefaultRedirectUri() //method will set the public client application's redirect URI property to the default recommended redirect URI for public client applications.
             .Build();
             Console.WriteLine("PublicClient built");
@@ -68,7 +67,7 @@ namespace AZ204_EntrAuth.Clients
                         {
                             Console.WriteLine(deviceCode.Message);
                             Console.WriteLine("Please hit Enter when you finish with browser login...in here's usually a polling put in place (netflix, etc) in order to react automatically after a few secs...");
-                            Console.ReadLine();
+                            // Console.ReadLine();
                             return Task.CompletedTask;
                         }).ExecuteAsync(default);
                         await PrintTokenClaimsAndStalkAfterSuccess(sb, resDevice);

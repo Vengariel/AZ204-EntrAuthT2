@@ -14,7 +14,6 @@ internal class Program
 
 
 
-
     #region Settings
     static IConfigurationRoot GetAppSettings()
     {
@@ -45,20 +44,28 @@ internal class Program
         var choice = GetMenuUserOption();
         while (choice != 0)
         {
+            BaseAppClient client;
+            string[] scopes;
             switch (choice)
             {
                 case 1:
+
+                    client = new PublicClient();
+                    scopes = ["user.read"];
+                    await client.Build_Process(settings.AzureSettings.PublicClient, scopes, choice);
+                    choice = GetMenuUserOption();
+                    break;
                 case 2:
-                    var publicClient = new PublicClient();
-                    string[] scopes = { "user.read" };
-                    await publicClient.Build_Process(settings, scopes, choice);
+                    client = new PublicClient();
+                    scopes = ["user.read"];
+                    await client.Build_Process(settings.AzureSettings.PublicClientDeviceCode, scopes, choice);
                     choice = GetMenuUserOption();
                     break;
 
                 case 3:
-                    var confidentialClient = new ConfidentialClient();
-                    string[] newScopes = { "https://graph.microsoft.com/.default" };
-                    await confidentialClient.Build_Process(settings, newScopes);
+                    client = new ConfidentialClient();
+                    scopes = ["https://graph.microsoft.com/.default"];
+                    await client.Build_Process(settings.AzureSettings.ConfidentialClient, scopes, default);
                     choice = GetMenuUserOption();
                     break;
 
@@ -96,5 +103,4 @@ internal class Program
         }
         return valuePicked;
     }
-
 }

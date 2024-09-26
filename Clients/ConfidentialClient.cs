@@ -5,14 +5,14 @@ namespace AZ204_EntrAuth.Clients
 {
     public class ConfidentialClient : BaseAppClient, IConfidentialClient
     {
-        public async Task Build_Process(AppSettings appSettings, string[] scopes)
+        public override async Task Build_Process(ClientSettings clientSettings, string[] scopes, byte chosenOption)
         {
-            var concreteCllientAppSettings = appSettings.AzureSettings.ConfidentialClient;
+
             var confidentialClientIOptions = new ConfidentialClientApplicationOptions()
             {
-                ClientId = concreteCllientAppSettings.ClientId,
-                ClientSecret = concreteCllientAppSettings.Secret,
-                TenantId = concreteCllientAppSettings.TenantId
+                ClientId = clientSettings.ClientId,
+                ClientSecret = ((ConfidentialClientSettings)clientSettings).Secret,
+                TenantId = clientSettings.TenantId
             };
 
             var confidentialApp = ConfidentialClientApplicationBuilder
@@ -21,7 +21,7 @@ namespace AZ204_EntrAuth.Clients
 
             Console.WriteLine("ConfidentialClient built");
             await ProcessOptions(confidentialApp, scopes);
-           // Environment.Exit(0);
+            // Environment.Exit(0);
         }
 
         public async Task ProcessOptions(IConfidentialClientApplication confidentialApp, string[] scopes)

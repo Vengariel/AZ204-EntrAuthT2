@@ -8,7 +8,8 @@
     public class ClientApplicationSettings
     {
         public ClientSettings PublicClient { get; set; }
-        public ConfidentialCLientSettings ConfidentialClient { get; set; }
+        public ClientSettings PublicClientDeviceCode { get; set; }
+        public ConfidentialClientSettings ConfidentialClient { get; set; }
 
     }
 
@@ -18,7 +19,7 @@
         public string TenantId { get; set; }
     }
 
-    public class ConfidentialCLientSettings : ClientSettings
+    public class ConfidentialClientSettings : ClientSettings
     {
         public string Secret { get; set; }
     }
