@@ -39,7 +39,7 @@ internal class Program
     public static async Task Main(string[] args)
     {
         Console.WriteLine("Reading settings");
-        var settings = GetAppSettings().Get<AppSettings>();
+        var settings = GetAppSettings().Get<AppSettings>() ?? new AppSettings();
 
         var choice = GetMenuUserOption();
         while (choice != 0)

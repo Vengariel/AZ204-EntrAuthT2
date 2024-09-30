@@ -19,7 +19,7 @@ namespace AZ204_EntrAuth.Clients
 
             Append2EmptyLines(sb);
             sb.AppendLine($"STALKING via Graph");
-            sb.AppendLine($"{await FlurlIt.StalkThroughGraph(authenticationResult?.AccessToken)}");
+            sb.AppendLine($"{await FlurlIt.StalkThroughGraph(authenticationResult?.AccessToken ?? string.Empty)}");
             Console.WriteLine(sb.ToString());
         }
         public abstract Task Build_Process(ClientSettings clientSettings, string[] scopes, byte chosenOption);
