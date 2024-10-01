@@ -3,9 +3,9 @@ using Microsoft.Identity.Client;
 
 namespace AZ204_EntrAuth.Clients
 {
-    public interface IPublicClient
-    {
-        //Task Build_Process(AppSettings appSettings, string[] scopes);
-        //Task ProcessOptions(IPublicClientApplication publicApp, string[] scopes);
-    }
+	public interface IPublicClient
+	{
+		Task<string> Build_Process(ClientSettings clientSettings, string[] scopes, byte choosenOption);
+		Task<string> ProcessOptions(IPublicClientApplication publicApp, string[] scopes, byte choosenOption);
+	}
 }

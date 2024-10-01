@@ -1,3 +1,7 @@
+using AZ204_EntraAPI.Services;
+using AZ204_EntrAuth;
+using AZ204_EntrAuth.Clients;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,8 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// TODO: Enable service injection
+// register services
+//builder.Services.AddSingleton<ISettingsProvider, SettingsProvider>();
+//builder.Services.AddScoped<IPublicClient, PublicClient>();
+//builder.Services.AddScoped<IAuthService, AuthService>();
+
+// TODO: add support for web api controllers
 // add support for web api controllers
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -38,6 +49,15 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
+
+app.MapGet("/auth", async () =>
+{
+	ISettingsProvider settingsProvider = new SettingsProvider();
+	IPublicClient publicClient = new PublicClient();
+	var authService = new AuthService(publicClient, settingsProvider);
+
+	return await authService.GetAccessToken();
+});
 
 app.Run();
 
