@@ -365,3 +365,4 @@ FodyWeavers.xsd
 
 # Ignore development settings because it may contains secrets and keys
 /appsettings.Development.json
+/AZ204-EntraAPI/appsettings.Development.json
