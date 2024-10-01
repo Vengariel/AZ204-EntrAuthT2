@@ -437,35 +437,42 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "C:\\Users\\lowSl\\source\\repos\\AZ204-EntrAuthT2\\AZ204-EntraAPI-Data\\AZ204-EntraConsole.csproj",
       "Microsoft.AspNetCore.OpenApi >= 8.0.8",
       "Swashbuckle.AspNetCore >= 6.4.0"
     ]
   },
   "packageFolders": {
-    "/home/codespace/.nuget/packages/": {}
+    "C:\\Users\\lowSl\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/workspaces/AZ204-EntrAuthT2/AZ204-EntraAPI/AZ204-EntraAPI.csproj",
+      "projectUniqueName": "C:\\Users\\lowSl\\source\\repos\\AZ204-EntrAuthT2\\AZ204-EntraAPI\\AZ204-EntraAPI.csproj",
       "projectName": "AZ204-EntraAPI",
-      "projectPath": "/workspaces/AZ204-EntrAuthT2/AZ204-EntraAPI/AZ204-EntraAPI.csproj",
-      "packagesPath": "/home/codespace/.nuget/packages/",
-      "outputPath": "/workspaces/AZ204-EntrAuthT2/AZ204-EntraAPI/obj/",
+      "projectPath": "C:\\Users\\lowSl\\source\\repos\\AZ204-EntrAuthT2\\AZ204-EntraAPI\\AZ204-EntraAPI.csproj",
+      "packagesPath": "C:\\Users\\lowSl\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\lowSl\\source\\repos\\AZ204-EntrAuthT2\\AZ204-EntraAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/codespace/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\lowSl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\lowSl\\source\\repos\\AZ204-EntrAuthT2\\AZ204-EntraAPI-Data\\AZ204-EntraConsole.csproj": {
+              "projectPath": "C:\\Users\\lowSl\\source\\repos\\AZ204-EntrAuthT2\\AZ204-EntraAPI-Data\\AZ204-EntraConsole.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -511,8 +518,19 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1104",
+      "level": "Error",
+      "message": "Unable to find project 'C:\\Users\\lowSl\\source\\repos\\AZ204-EntrAuthT2\\AZ204-EntraAPI-Data\\AZ204-EntraConsole.csproj'. Check that the project reference is valid and that the project file exists.",
+      "libraryId": "C:\\Users\\lowSl\\source\\repos\\AZ204-EntrAuthT2\\AZ204-EntraAPI-Data\\AZ204-EntraConsole.csproj",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }
