@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AZ204-EntraAPI-Data\AZ204-EntraConsole.csproj" />
+    <ProjectReference Include="..\AZ204-EntraConsole\AZ204-EntrAuth.csproj" />
   </ItemGroup>
 
 </Project>
