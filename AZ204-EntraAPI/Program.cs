@@ -1,6 +1,7 @@
 using AZ204_EntraAPI.Services;
 using AZ204_EntrAuth;
 using AZ204_EntrAuth.Clients;
+using AZ204_EntrAuth.HttpClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,47 +10,35 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// TODO: Enable service injection
 // register services
+builder.Services.AddScoped<IGraphHttpClient, GraphHttpClient>();
+
+// TODO: Enable service injection
 //builder.Services.AddSingleton<ISettingsProvider, SettingsProvider>();
 //builder.Services.AddScoped<IPublicClient, PublicClient>();
 //builder.Services.AddScoped<IAuthService, AuthService>();
 
-// TODO: add support for web api controllers
 // add support for web api controllers
-//builder.Services.AddControllers();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+	app.UseSwagger();
+	app.UseSwaggerUI();
 }
+
+app.UseRouting();
+app.UseEndpoints(endpoints =>
+{
+	endpoints.MapControllers();
+});
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
-
+// MAPPED ENDPOINTS
 app.MapGet("/auth", async () =>
 {
 	ISettingsProvider settingsProvider = new SettingsProvider();
@@ -57,11 +46,7 @@ app.MapGet("/auth", async () =>
 	var authService = new AuthService(publicClient, settingsProvider);
 
 	return await authService.GetAccessToken();
-});
+})
+.WithOpenApi();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

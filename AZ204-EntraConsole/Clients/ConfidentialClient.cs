@@ -24,7 +24,7 @@ namespace AZ204_EntrAuth.Clients
             // Environment.Exit(0);
         }
 
-        public async Task ProcessOptions(IConfidentialClientApplication confidentialApp, string[] scopes)
+        public static async Task ProcessOptions(IConfidentialClientApplication confidentialApp, string[] scopes)
         {
             var sb = new StringBuilder();
             //var newScopes = new string[] { "https://graph.microsoft.com/.default" }; // single  "https://outlook.office365.com/.default" 

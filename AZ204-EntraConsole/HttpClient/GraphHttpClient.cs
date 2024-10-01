@@ -5,6 +5,10 @@ namespace AZ204_EntrAuth.HttpClient
 	{
 		const string GRAPH_URL = "https://graph.microsoft.com/v1.0/me";
 
+		public GraphHttpClient()
+		{
+		}
+
 		public async Task<string> Get(string accessToken)
 		{
 			try

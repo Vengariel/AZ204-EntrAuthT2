@@ -13,7 +13,7 @@ namespace AZ204_EntrAuth.Clients
 			Append2EmptyLines(sb);
 			sb.AppendLine($"Id Token: {authenticationResult?.IdToken}");
 			Append2EmptyLines(sb);
-			foreach (var claim in authenticationResult?.ClaimsPrincipal?.Identities?.FirstOrDefault()?.Claims ?? Enumerable.Empty<Claim>())
+			foreach (var claim in authenticationResult?.ClaimsPrincipal?.Identities?.FirstOrDefault()?.Claims ?? [])
 			{
 				sb.AppendLine($"{claim.Type}: {claim.Value}");
 			}

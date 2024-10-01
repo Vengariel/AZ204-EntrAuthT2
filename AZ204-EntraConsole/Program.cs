@@ -12,7 +12,7 @@ internal partial class Program
 	 };
 	#endregion Settings
 
-	public static async Task Main(string[] args)
+	public static async Task Main(/*string[] args*/)
 	{
 		Console.WriteLine("Reading settings");
 		var settings = new SettingsProvider().GetAppSettings().Get<AppSettings>() ?? new AppSettings();
