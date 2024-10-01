@@ -1,0 +1,6 @@
+@AZ204_EntraAPI_HostAddress = http://localhost:5171
+
+GET {{AZ204_EntraAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
