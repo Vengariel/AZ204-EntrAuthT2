@@ -10,7 +10,7 @@ namespace AZ204_EntraAPI.Services
 
 		public async Task<string> GetAccessToken()
 		{
-			string[] scopes = ["User.Read", "Mail.ReadBasic"];
+			string[] scopes = ["User.Read"];
 			var result = await _publicClient.Build_Process(_settings.AzureSettings.PublicClient, scopes, 1);
 
 			return result;

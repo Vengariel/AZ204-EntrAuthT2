@@ -11,7 +11,7 @@ namespace AZ204_EntraAPI.Controllers
 		private readonly IGraphHttpClient _graphHttpClient = graphHttpClient;
 
 		[HttpGet]
-		public async Task<IActionResult> Index([FromQuery][Required] string at, [FromQuery] string? restOfUrl = null)
+		public async Task<IActionResult> Index([FromQuery][Required] string at, [FromQuery] string? restOfUrl = "me")
 		{
 			if (!ModelState.IsValid)
 			{

@@ -1,9 +1,10 @@
 ﻿using Flurl.Http;
+
 namespace AZ204_EntrAuth.HttpClient
 {
 	public class GraphHttpClient : IGraphHttpClient
 	{
-		const string GRAPH_URL = "https://graph.microsoft.com/v1.0/me";
+		const string GRAPH_URL = "https://graph.microsoft.com/v1.0";
 
 		public GraphHttpClient()
 		{
