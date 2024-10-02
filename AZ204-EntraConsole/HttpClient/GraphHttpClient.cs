@@ -9,10 +9,15 @@ namespace AZ204_EntrAuth.HttpClient
 		{
 		}
 
-		public async Task<string> Get(string accessToken)
+		public async Task<string> Get(string accessToken, string? restOfUrl = null)
 		{
 			try
 			{
+				if (!string.IsNullOrEmpty(restOfUrl))
+				{
+					return await $"{GRAPH_URL}/{restOfUrl}".WithOAuthBearerToken(accessToken).GetStringAsync();
+				}
+
 				return await GRAPH_URL.WithOAuthBearerToken(accessToken).GetStringAsync();
 			}
 			catch (Exception ex)

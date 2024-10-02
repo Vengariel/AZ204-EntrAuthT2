@@ -3,7 +3,7 @@
 	public interface IGraphHttpClient
 	{
 		// GET method
-		Task<string> Get(string accessToken);
+		Task<string> Get(string accessToken, string? restOfUrl = null);
 
 		// POST method
 		Task<string> Post(string accessToken, object data);
