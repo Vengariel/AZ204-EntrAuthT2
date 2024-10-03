@@ -12,8 +12,6 @@ builder.Services.AddSwaggerGen();
 
 // register services
 builder.Services.AddScoped<IGraphHttpClient, GraphHttpClient>();
-
-// TODO: Enable service injection
 builder.Services.AddSingleton<ISettingsProvider, SettingsProvider>();
 builder.Services.AddScoped<IPublicClient, PublicClient>();
 builder.Services.AddScoped<IAuthService, AuthService>();

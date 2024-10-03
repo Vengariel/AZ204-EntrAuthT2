@@ -8,30 +8,12 @@ namespace AZ204_EntraAPI.Services
 {
 	public class MsGraphService : IMsGraphService
 	{
-		private readonly GraphServiceClient _graphServiceClient;
+		//private readonly GraphServiceClient _graphServiceClient;
+		private readonly ConfidentialClientSettings _clientSettings;
 
 		public MsGraphService(ConfidentialClientSettings clientSettings)
 		{
-			string[]? scopes = clientSettings.Scopes;
-
-			var tenantId = clientSettings.TenantId;
-
-			// Values from app registration
-			var clientId = clientSettings.ClientId;
-
-			var clientSecret = clientSettings.Secret;
-
-			var options = new TokenCredentialOptions
-			{
-				AuthorityHost = AzureAuthorityHosts.AzurePublicCloud
-			};
-
-			// https://docs.microsoft.com/dotnet/api/azure.identity.clientsecretcredential
-			var clientSecretCredential = new ClientSecretCredential(
-				  tenantId, clientId, clientSecret, options);
-
-			_graphServiceClient = new GraphServiceClient(
-				  clientSecretCredential, scopes);
+			_clientSettings = clientSettings;
 		}
 
 		/// <summary>
@@ -39,6 +21,21 @@ namespace AZ204_EntraAPI.Services
 		/// </summary>
 		public async Task<Invitation?> InviteUserAsync(UserModel userModel, string redirectUrl)
 		{
+			string[]? scopes = _clientSettings.Scopes;
+			var tenantId = _clientSettings.TenantId;
+			var clientId = _clientSettings.ClientId;
+			var clientSecret = _clientSettings.Secret;
+			var options = new TokenCredentialOptions
+			{
+				AuthorityHost = AzureAuthorityHosts.AzurePublicCloud
+			};
+
+			var clientSecretCredential = new ClientSecretCredential(
+				  tenantId, clientId, clientSecret, options);
+
+			var graphServiceClient = new GraphServiceClient(
+				  clientSecretCredential, scopes);
+
 			var invitation = new Invitation
 			{
 				InvitedUserEmailAddress = userModel.Email,
@@ -47,11 +44,12 @@ namespace AZ204_EntraAPI.Services
 				InvitedUserType = "guest" // default is guest,member
 			};
 
-			var invite = await _graphServiceClient.Invitations.PostAsync(invitation);
+			var invite = await graphServiceClient.Invitations.PostAsync(invitation);
 
 			return invite;
 		}
 
+		// TODO: Implement the following methods
 		//public async Task<User?> UserExistsAsync(string email)
 		//{
 		//	var users = await _graphServiceClient.Users
@@ -65,6 +63,7 @@ namespace AZ204_EntraAPI.Services
 		//	return users.CurrentPage[0];
 		//}
 
+		// TODO: Implement the following methods
 		//public async Task<User> GetGraphUser(string userId)
 		//{
 		//	return await _graphServiceClient.Users[userId]
