@@ -52,12 +52,12 @@ namespace AZ204_EntraAPI.Controllers
 			//	return BadRequest(ModelState);
 			//}
 
-			await CreateUserAsync(new UserModel { Email = "jceron@apexsystems.com" });
+			var result = await CreateUserAsync(new UserModel { Email = "jceron@apexsystems.com" });
 
-			return Ok(true);
+			return Ok(result.Invitation);
 		}
 
-		private async Task<(Invitation? UserModel, string Error)> CreateUserAsync(UserModel userModel)
+		private async Task<(Invitation? Invitation, string Error)> CreateUserAsync(UserModel userModel)
 		{
 			var result = await _msGraphService.InviteUser(
 				userModel,
