@@ -1,17 +1,18 @@
-﻿using AZ204_EntrAuth;
+﻿using AZ204_EntraAPI.Model;
+using AZ204_EntrAuth;
 using Azure.Identity;
 using Microsoft.Graph;
 using Microsoft.Graph.Models;
 
-namespace AZ204_EntraAPI.Controllers
+namespace AZ204_EntraAPI.Services
 {
-	public class MsGraphService
+	public class MsGraphService : IMsGraphService
 	{
 		private readonly GraphServiceClient _graphServiceClient;
 
 		public MsGraphService(ConfidentialClientSettings clientSettings)
 		{
-			string[]? scopes = new[] { ".default" };
+			string[]? scopes = clientSettings.Scopes;
 
 			var tenantId = clientSettings.TenantId;
 
@@ -20,9 +21,6 @@ namespace AZ204_EntraAPI.Controllers
 
 			var clientSecret = clientSettings.Secret;
 
-			//_federatedDomainDomain = configuration.GetValue<string>
-			//("FederatedDomain");
-
 			var options = new TokenCredentialOptions
 			{
 				AuthorityHost = AzureAuthorityHosts.AzurePublicCloud
@@ -30,16 +28,16 @@ namespace AZ204_EntraAPI.Controllers
 
 			// https://docs.microsoft.com/dotnet/api/azure.identity.clientsecretcredential
 			var clientSecretCredential = new ClientSecretCredential(
-				 tenantId, clientId, clientSecret, options);
+				  tenantId, clientId, clientSecret, options);
 
 			_graphServiceClient = new GraphServiceClient(
-				 clientSecretCredential, scopes);
+				  clientSecretCredential, scopes);
 		}
 
 		/// <summary>
 		/// Graph invitations only works for Azure AD, not Azure B2C
 		/// </summary>
-		public async Task<Invitation?> InviteUser(UserModel userModel, string redirectUrl)
+		public async Task<Invitation?> InviteUserAsync(UserModel userModel, string redirectUrl)
 		{
 			var invitation = new Invitation
 			{
