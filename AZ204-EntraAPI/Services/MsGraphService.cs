@@ -21,12 +21,12 @@ namespace AZ204_EntraAPI.Services
 		/// </summary>
 		public async Task<Invitation?> InviteUserAsync(UserModel userModel, string redirectUrl)
 		{
-			// TODO: Implement the method to invite a user to the organization
+			// TODO: 1.- Implement the method to invite a user to the organization
 
 			return null;
 		}
 
-		// TODO: Implement the following methods
+		// TODO: Implement the UserExistsAsync methods
 		//public async Task<User?> UserExistsAsync(string email)
 		//{
 		//	var users = await _graphServiceClient.Users

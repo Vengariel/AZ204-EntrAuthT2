@@ -12,7 +12,7 @@ namespace AZ204_EntraAPI.Controllers
 	{
 		private readonly IGraphHttpClient _graphHttpClient = graphHttpClient;
 
-		// TODO: The API consumer should be able to query the Graph API to get the user information.
+		// TODO: 2.- The API consumer should be able to query the Graph API to get the user information.
 		// "https://graph.microsoft.com/v1.0/me"
 		[HttpGet(nameof(Me))]
 		public async Task<IActionResult> Me([FromQuery][Required] string accessToken)
@@ -25,7 +25,7 @@ namespace AZ204_EntraAPI.Controllers
 			return Ok(true);
 		}
 
-		// TODO: The API consumer should be able to query the Graph API to get the application
+		// TODO: 3.- The API consumer should be able to query the Graph API to get the application
 		// information. "https://graph.microsoft.com/v1.0/applications"
 		[HttpGet(nameof(Applications))]
 		public async Task<IActionResult> Applications([FromQuery][Required] string accessToken)
