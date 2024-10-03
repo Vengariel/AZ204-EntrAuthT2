@@ -21,32 +21,9 @@ namespace AZ204_EntraAPI.Services
 		/// </summary>
 		public async Task<Invitation?> InviteUserAsync(UserModel userModel, string redirectUrl)
 		{
-			string[]? scopes = _clientSettings.Scopes;
-			var tenantId = _clientSettings.TenantId;
-			var clientId = _clientSettings.ClientId;
-			var clientSecret = _clientSettings.Secret;
-			var options = new TokenCredentialOptions
-			{
-				AuthorityHost = AzureAuthorityHosts.AzurePublicCloud
-			};
+			// TODO: Implement the method to invite a user to the organization
 
-			var clientSecretCredential = new ClientSecretCredential(
-				  tenantId, clientId, clientSecret, options);
-
-			var graphServiceClient = new GraphServiceClient(
-				  clientSecretCredential, scopes);
-
-			var invitation = new Invitation
-			{
-				InvitedUserEmailAddress = userModel.Email,
-				SendInvitationMessage = true,
-				InviteRedirectUrl = redirectUrl,
-				InvitedUserType = "guest" // default is guest,member
-			};
-
-			var invite = await graphServiceClient.Invitations.PostAsync(invitation);
-
-			return invite;
+			return null;
 		}
 
 		// TODO: Implement the following methods
