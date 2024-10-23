@@ -12,19 +12,27 @@ builder.Services.AddSwaggerGen();
 
 // register services
 builder.Services.AddScoped<IGraphHttpClient, GraphHttpClient>();
-
-// TODO: Enable service injection
 builder.Services.AddSingleton<ISettingsProvider, SettingsProvider>();
 builder.Services.AddScoped<IPublicClient, PublicClient>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMsGraphService, MsGraphService>();
+builder.Services.AddSingleton<KeyVaultService>();
+
 builder.Services.AddSingleton((c) => { 
 	return new SettingsProvider().GetAppSettings().Get<AppSettings>() ?? new AppSettings();
 });
+
 builder.Services.AddSingleton(c => { 
 	var settings = c.GetRequiredService<AppSettings>().AzureSettings;
 
 	return settings.ConfidentialClient;
+});
+
+builder.Services.AddSingleton(c =>
+{
+	var settings = c.GetRequiredService<AppSettings>().AzureSettings;
+
+	return settings;
 });
 
 // add support for web api controllers

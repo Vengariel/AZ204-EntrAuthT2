@@ -5,13 +5,13 @@ namespace AZ204_EntrAuth.Clients
 {
 	public class ConfidentialClient : BaseAppClient, IConfidentialClient
 	{
-		public override async Task Build_Process(ClientSettings clientSettings, string[] scopes, byte chosenOption)
+		public override async Task Build_Process(string[] scopes, byte chosenOption, string clientId, string tenantId, string clientSecret)
 		{
 			var confidentialClientIOptions = new ConfidentialClientApplicationOptions()
 			{
-				ClientId = clientSettings.ClientId,
-				ClientSecret = ((ConfidentialClientSettings)clientSettings).Secret,
-				TenantId = clientSettings.TenantId
+				ClientId = clientId,
+				ClientSecret = clientSecret,
+				TenantId = tenantId
 			};
 
 			var confidentialApp = ConfidentialClientApplicationBuilder

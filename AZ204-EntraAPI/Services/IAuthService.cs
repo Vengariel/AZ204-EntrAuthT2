@@ -2,6 +2,6 @@
 {
 	public interface IAuthService
 	{
-		public Task<string> GetAccessToken();
+		public Task<string> GetAccessToken(string tenantId, string clientId, string clientSecret);
 	}
 }

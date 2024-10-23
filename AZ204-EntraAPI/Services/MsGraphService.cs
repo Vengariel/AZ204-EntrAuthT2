@@ -6,20 +6,23 @@ using Microsoft.Graph.Models;
 
 namespace AZ204_EntraAPI.Services
 {
-	public class MsGraphService : IMsGraphService
+	public class MsGraphService(ConfidentialClientSettings clientSettings, KeyVaultService keyVaultService) : IMsGraphService
 	{
-		private readonly GraphServiceClient _graphServiceClient;
+		private readonly ConfidentialClientSettings _clientSettings = clientSettings;
+		private readonly KeyVaultService _keyVaultService = keyVaultService;
 
-		public MsGraphService(ConfidentialClientSettings clientSettings)
+		/// <summary>
+		/// Graph invitations only works for Azure AD, not Azure B2C
+		/// </summary>
+		public async Task<Invitation?> InviteUserAsync(UserModel userModel)
 		{
-			string[]? scopes = clientSettings.Scopes;
+			string[]? scopes = _clientSettings.Scopes;
 
-			var tenantId = clientSettings.TenantId;
-
-			// Values from app registration
-			var clientId = clientSettings.ClientId;
-
-			var clientSecret = clientSettings.Secret;
+			// TODO: Get these from Key Vault
+			var tenantId = await _keyVaultService.GetSecretAsync("confidentialClientTenantId");
+			var clientId = await _keyVaultService.GetSecretAsync("confidentialClientId");
+			var clientSecret = await _keyVaultService.GetSecretAsync("confidentialClientSecret");
+			string redirectUrl = await _keyVaultService.GetSecretAsync("confidentialClientRedirectUrl");
 
 			var options = new TokenCredentialOptions
 			{
@@ -30,15 +33,9 @@ namespace AZ204_EntraAPI.Services
 			var clientSecretCredential = new ClientSecretCredential(
 				  tenantId, clientId, clientSecret, options);
 
-			_graphServiceClient = new GraphServiceClient(
+			var graphServiceClient = new GraphServiceClient(
 				  clientSecretCredential, scopes);
-		}
 
-		/// <summary>
-		/// Graph invitations only works for Azure AD, not Azure B2C
-		/// </summary>
-		public async Task<Invitation?> InviteUserAsync(UserModel userModel, string redirectUrl)
-		{
 			var invitation = new Invitation
 			{
 				InvitedUserEmailAddress = userModel.Email,
@@ -47,29 +44,9 @@ namespace AZ204_EntraAPI.Services
 				InvitedUserType = "guest" // default is guest,member
 			};
 
-			var invite = await _graphServiceClient.Invitations.PostAsync(invitation);
+			var invite = await graphServiceClient.Invitations.PostAsync(invitation);
 
 			return invite;
 		}
-
-		//public async Task<User?> UserExistsAsync(string email)
-		//{
-		//	var users = await _graphServiceClient.Users
-		//		 .Request()
-		//		 .Filter($"mail eq '{email}'")
-		//		 .GetAsync();
-
-		//	if (users.CurrentPage.Count == 0)
-		//		return null;
-
-		//	return users.CurrentPage[0];
-		//}
-
-		//public async Task<User> GetGraphUser(string userId)
-		//{
-		//	return await _graphServiceClient.Users[userId]
-		//		 .Request()
-		//		 .GetAsync();
-		//}
 	}
 }
