@@ -26,7 +26,7 @@ namespace AZ204_EntrAuth.Clients
 			sb.AppendLine($"{await graphHttpClient.Get(authenticationResult?.AccessToken ?? string.Empty)}");
 			Console.WriteLine(sb.ToString());
 		}
-		public abstract Task Build_Process(ClientSettings clientSettings, string[] scopes, byte chosenOption);
+		public abstract Task Build_Process(string[] scopes, byte chosenOption, string clientId, string tenantId, string clientSecret);
 
 		#region private utility stuff
 		private static void Append2EmptyLines(StringBuilder sb)

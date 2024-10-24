@@ -5,6 +5,6 @@ namespace AZ204_EntraAPI.Services
 {
 	public interface IMsGraphService
 	{
-		Task<Invitation?> InviteUserAsync(UserModel userModel, string redirectUrl);
+		Task<Invitation?> InviteUserAsync(UserModel userModel);
 	}
 }

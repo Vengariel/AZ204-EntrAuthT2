@@ -7,21 +7,12 @@
 
 	public class ClientApplicationSettings
 	{
-		public ClientSettings PublicClient { get; set; }
-		public ClientSettings PublicClientDeviceCode { get; set; }
 		public ConfidentialClientSettings ConfidentialClient { get; set; }
-		public string RedirectUrl { get; set; }
+		public string KeyVaultUrl { get; set; }
 	}
 
-	public class ClientSettings
+	public class ConfidentialClientSettings
 	{
-		public string ClientId { get; set; }
-		public string TenantId { get; set; }
-	}
-
-	public class ConfidentialClientSettings : ClientSettings
-	{
-		public string Secret { get; set; }
 		public string[]? Scopes { get; set; }
 	}
 }

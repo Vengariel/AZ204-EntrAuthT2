@@ -1,6 +1,4 @@
-﻿using AZ204_EntrAuth;
-using AZ204_EntrAuth.Clients;
-using Microsoft.Extensions.Configuration;
+﻿using AZ204_EntrAuth.Clients;
 
 internal partial class Program
 {
@@ -15,33 +13,36 @@ internal partial class Program
 	public static async Task Main(/*string[] args*/)
 	{
 		Console.WriteLine("Reading settings");
-		var settings = new SettingsProvider().GetAppSettings().Get<AppSettings>() ?? new AppSettings();
 
 		var choice = GetMenuUserOption();
 		while (choice != 0)
 		{
 			BaseAppClient client;
 			string[] scopes;
+
+			string tenantId = string.Empty;
+			string clientId = string.Empty;
+			string clientSecret = string.Empty;
+
 			switch (choice)
 			{
 				case 1:
-
 					client = new PublicClient();
 					scopes = ["user.read"];
-					await client.Build_Process(settings.AzureSettings.PublicClient, scopes, choice);
+					await client.Build_Process(scopes, choice, clientId, tenantId, clientSecret);
 					choice = GetMenuUserOption();
 					break;
 				case 2:
 					client = new PublicClient();
 					scopes = ["user.read"];
-					await client.Build_Process(settings.AzureSettings.PublicClientDeviceCode, scopes, choice);
+					await client.Build_Process(scopes, choice, clientId, tenantId, clientSecret);
 					choice = GetMenuUserOption();
 					break;
 
 				case 3:
 					client = new ConfidentialClient();
 					scopes = ["https://graph.microsoft.com/.default"];
-					await client.Build_Process(settings.AzureSettings.ConfidentialClient, scopes, default);
+					await client.Build_Process(scopes, default, clientId, tenantId, clientSecret);
 					choice = GetMenuUserOption();
 					break;
 
